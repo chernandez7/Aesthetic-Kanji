@@ -46828,7 +46828,7 @@ var CardScene = function (_Component) {
 
     _this.state = {
       cardIndex: 0,
-      list: _Kanji.N5,
+      list: null,
       isLeftDisabled: false,
       isRightDisabled: false
     };
@@ -46840,6 +46840,41 @@ var CardScene = function (_Component) {
   }
 
   babelHelpers.createClass(CardScene, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      console.log(this.props.navigation.state.params.level);
+      switch (this.props.navigation.state.params.level) {
+        case 5:
+          this.setState({
+            list: _Kanji.N5
+          });
+          break;
+        case 4:
+          this.setState({
+            list: _Kanji.N4
+          });
+          break;
+        case 3:
+          this.setState({
+            list: _Kanji.N3
+          });
+          break;
+        case 2:
+          this.setState({
+            list: _Kanji.N2
+          });
+          break;
+        case 1:
+          this.setState({
+            list: _Kanji.N1
+          });
+          break;
+        default:
+          console.log('how did you get here?');
+          break;
+      }
+    }
+  }, {
     key: 'handleIncrement',
     value: function handleIncrement() {
 
@@ -46934,23 +46969,7 @@ var Card = function (_Component2) {
           _reactNative.Text,
           { style: styles.cardText },
           this.props.source[this.props.index].kanji
-        ),
-        _react2.default.createElement(
-          _reactNative.Text,
-          { style: styles.cardText },
-          this.props.source[this.props.index].onyomi
-        ),
-        _react2.default.createElement(
-          _reactNative.Text,
-          { style: styles.cardText },
-          this.props.source[this.props.index].kunyomi
-        ),
-        _react2.default.createElement(
-          _reactNative.Text,
-          { style: styles.cardText },
-          this.props.source[this.props.index].meaning
-        ),
-        _react2.default.createElement(_reactNative.Image, { style: styles.cardImage, source: _images2.default[this.props.source[this.props.index].img] })
+        )
       );
     }
   }]);

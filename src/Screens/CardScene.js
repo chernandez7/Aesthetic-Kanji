@@ -28,9 +28,10 @@ export default class CardScene extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       cardIndex: 0,
-      list: N5,
+      list: null,
       isLeftDisabled: false,
       isRightDisabled: false
     };
@@ -38,6 +39,40 @@ export default class CardScene extends Component {
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
 
+  }
+
+  componentWillMount() {
+    console.log(this.props.navigation.state.params.level);
+    switch (this.props.navigation.state.params.level){
+      case 5:
+        this.setState({
+          list: N5
+        });
+        break;
+      case 4:
+        this.setState({
+          list: N4
+        });
+        break;
+      case 3:
+        this.setState({
+          list: N3
+        });
+        break;
+      case 2:
+        this.setState({
+          list: N2
+        });
+        break;
+      case 1:
+        this.setState({
+          list: N1
+        });
+        break;
+      default:
+        console.log('how did you get here?');
+        break;
+    }
   }
 
   handleIncrement() {
@@ -117,10 +152,12 @@ class Card extends Component {
     return(
       <View style={styles.cardContainer}>
         <Text style={styles.cardText}>{this.props.source[this.props.index].kanji}</Text>
+        {/*
         <Text style={styles.cardText}>{this.props.source[this.props.index].onyomi}</Text>
         <Text style={styles.cardText}>{this.props.source[this.props.index].kunyomi}</Text>
         <Text style={styles.cardText}>{this.props.source[this.props.index].meaning}</Text>
         <Image style={styles.cardImage} source={Images[this.props.source[this.props.index].img]}/>
+      */}
       </View>
     );
   }
