@@ -3,8 +3,8 @@
 WIP
 
 # TODO #
- - Set Up DB
- - Connect to App
- - App Flow
+ - ~~Set Up DB~~
+ - ~~Connect to App~~
+ - ~~App Flow~~
  - Design
  - Metrics / Visuals
