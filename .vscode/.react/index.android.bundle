@@ -54712,7 +54712,7 @@ var CardScene = function (_Component) {
 
     _this.state = {
       cardIndex: 0,
-      isLeftDisabled: false,
+      isLeftDisabled: true,
       isRightDisabled: false,
       isAnswerHidden: true
     };
@@ -54769,69 +54769,65 @@ var CardScene = function (_Component) {
       }
     }
   }, {
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      console.log(this.state.list);
-      console.log(this.state.key);
-      console.log(this.state.max);
-    }
-  }, {
     key: 'handleIncrement',
     value: function handleIncrement() {
 
       var MAX = this.state.list.length;
       var newIndex = this.state.cardIndex + 1;
-      console.log('index: ' + this.state.cardIndex);
 
       this.setState({
         isAnswerHidden: true
       });
 
-      if (!(this.state.cardIndex + 1 > MAX)) {
+      if (this.state.cardIndex < MAX - 1) {
         this.setState({
-          cardIndex: newIndex
+          cardIndex: newIndex,
+          isRightDisabled: false
         });
-
-        console.log('index: ' + this.state.cardIndex);
-
-        if (this.state.cardIndex >= MAX) {
-          this.setState({
-            isRightDisabled: true
-          });
-        } else if (this.state.cardIndex < MAX) {
-          this.setState({
-            isRightDisabled: false
-          });
-        }
+      }
+      if (this.state.cardIndex < MAX - 1 && this.state.cardIndex + 1 > 0) {
+        this.setState({
+          isLeftDisabled: false
+        });
+      }
+      if (this.state.cardIndex == MAX - 2) {
+        this.setState({
+          isRightDisabled: true
+        });
       }
     }
   }, {
     key: 'handleDecrement',
     value: function handleDecrement() {
+
       var MAX = this.state.list.length;
       var newIndex = this.state.cardIndex - 1;
 
       this.setState({
         isAnswerHidden: true
       });
+      console.log(this.state.cardIndex);
 
-      if (!(this.state.cardIndex - 1 < 0)) {
+      if (this.state.cardIndex > 0) {
         this.setState({
-          cardIndex: newIndex
-        });
-      }
-
-      console.log('index: ' + this.state.cardIndex);
-
-      if (this.state.cardIndex <= 0) {
-        this.setState({
-          isLeftDisabled: true
-        });
-      } else if (this.state.cardIndex > 0) {
-        this.setState({
+          cardIndex: newIndex,
           isLeftDisabled: false
         });
       }
+
+      if (this.state.cardIndex > 0 && this.state.cardIndex < MAX) {
+        this.setState({
+          isRightDisabled: false
+        });
+      }
+
+      console.log(this.state.cardIndex);
+      if (this.state.cardIndex - 1 == 0) {
+        this.setState({
+          isLeftDisabled: true
+        });
+      }
+      console.log('cant dec');
     }
   }, {
     key: 'handleCardPress',

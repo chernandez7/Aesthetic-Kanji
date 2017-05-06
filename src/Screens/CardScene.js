@@ -25,7 +25,7 @@ export default class CardScene extends Component {
 
     this.state = {
       cardIndex: 0,
-      isLeftDisabled: false,
+      isLeftDisabled: true,
       isRightDisabled: false,
       isAnswerHidden: true,
     };
@@ -79,69 +79,63 @@ export default class CardScene extends Component {
     }
   }
 
-  componentDidMount() {
-    console.log(this.state.list);
-    console.log(this.state.key);
-    console.log(this.state.max);
-  }
-
   handleIncrement() {
 
     var MAX = this.state.list.length;
     var newIndex = this.state.cardIndex + 1;
-    console.log('index: ' + this.state.cardIndex);
 
     this.setState({
           isAnswerHidden: true
         });
-
+    
     // Increment index
-    if (!(this.state.cardIndex + 1 > MAX)) { // not greater than max
+    if (this.state.cardIndex < MAX - 1) { // less than max
       this.setState({
           cardIndex: newIndex,
+          isRightDisabled: false
         });
-
-      console.log('index: ' + this.state.cardIndex);
-
-      if (this.state.cardIndex >= MAX) {
+    }
+    if ((this.state.cardIndex < MAX - 1) && (this.state.cardIndex + 1 > 0)) {
+      this.setState({
+          isLeftDisabled: false
+        });
+    }
+    if (this.state.cardIndex == MAX - 2) {
         this.setState({
           isRightDisabled: true
         });
-      } else if (this.state.cardIndex < MAX) {
-        this.setState({
-          isRightDisabled: false,
-        });
       }
-    }
-    
   }
 
   handleDecrement() {
+
     var MAX = this.state.list.length;
     var newIndex = this.state.cardIndex - 1;
 
     this.setState({
           isAnswerHidden: true
         });
-
-    // decrement index
-    if (!(this.state.cardIndex - 1 < 0)) { // not less than 0
+        
+    // Decrement index
+    if (this.state.cardIndex > 0) { // less than max
       this.setState({
           cardIndex: newIndex,
+          isLeftDisabled: false,
         });
     }
 
-    console.log('index: ' + this.state.cardIndex);
+    if ((this.state.cardIndex > 0) && (this.state.cardIndex < MAX)) { // less than max
+          this.setState({
+              isRightDisabled: false,
+            });
+        }
 
-    if (this.state.cardIndex <= 0) { // should be disabled
-      this.setState({
-        isLeftDisabled: true
-      });
-    } else if (this.state.cardIndex > 0) { // shouldn't be disabled
-      this.setState({
-        isLeftDisabled: false,
-      });
-    }
+    console.log(this.state.cardIndex);
+    if (this.state.cardIndex -1 == 0) {
+        this.setState({
+          isLeftDisabled: true
+        });
+      }
   }
 
   handleCardPress() {
