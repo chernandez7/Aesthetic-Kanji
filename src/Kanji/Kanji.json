@@ -1,0 +1,189 @@
+{ 
+  "Kanji": {
+    "N1": [
+
+    {
+      "kanji": "氏",
+      "onyomi": "シ",
+      "kunyomi": "うじ -うじ",
+      "meaning": "family name, surname, clan",
+      "img": "one"
+    },
+    {
+      "kanji": "統",
+      "onyomi": "トウ ホビ.",
+      "kunyomi": "す.べる",
+      "meaning": "overall, relationship, ruling, governing",
+      "img": "one"
+    },
+    {
+      "kanji": "保",
+      "onyomi": "ホ ホウ タモ",
+      "kunyomi": "-",
+      "meaning": "protect, guarantee, keep, preserve, sustain, support",
+      "img": "one"
+    },
+    {
+      "kanji": "第",
+      "onyomi": "ダイ テイ",
+      "kunyomi": "-",
+      "meaning": "Number, residence",
+      "img": "one"
+    },
+    {
+      "kanji": "結",
+      "onyomi": "ケツ ケチ ユ.ワエ",
+      "kunyomi": "むす.ぶ ゆ.う",
+      "meaning": "tie, bind, contract, join, organize, do up hair, fasten",
+      "img": "one"
+    }],
+    "N2": [
+
+    {
+      "kanji": "党",
+      "onyomi": "トウ",
+      "kunyomi": "なかま むら",
+      "meaning": "party, faction, clique",
+      "img": "one"
+    },
+    {
+      "kanji": "協",
+      "onyomi": "キョウ",
+      "kunyomi": "-",
+      "meaning": "co-, cooperation",
+      "img": "one"
+    },
+    {
+      "kanji": "総",
+      "onyomi": "ソウ フ",
+      "kunyomi": "す.べて すべ.て",
+      "meaning": "general, whole, all, full, total",
+      "img": "one"
+    },
+    {
+      "kanji": "区",
+      "onyomi": "ク オウ コウ",
+      "kunyomi": "-",
+      "meaning": "ward, district",
+      "img": "one"
+    },
+    {
+      "kanji": "領",
+      "onyomi": "リョウ",
+      "kunyomi": "-",
+      "meaning": "jurisdiction, dominion, territory, fief, reign",
+      "img": "one"
+    }],
+    "N3": [
+
+    {
+      "kanji": "王",
+      "onyomi": "ou, nou",
+      "kunyomi": "-",
+      "meaning": "King",
+      "img": "one"
+    },
+    {
+      "kanji": "貝",
+      "onyomi": "-",
+      "kunyomi": "Kai",
+      "meaning": "Shellfish",
+      "img": "one"
+    },
+    {
+      "kanji": "玉",
+      "onyomi": "gyoku",
+      "kunyomi": "Tama",
+      "meaning": "Gem",
+      "img": "one"
+    },
+    {
+      "kanji": "糸",
+      "onyomi": "shi",
+      "kunyomi": "Ito",
+      "meaning": "Thread",
+      "img": "one"
+    },
+    {
+      "kanji": "石",
+      "onyomi": "seki, shaku, koku",
+      "kunyomi": "Ishi",
+      "meaning": "Stone",
+      "img": "one"
+    }],
+    "N4": [
+
+    {
+      "kanji": "悪",
+      "onyomi": "aku, o",
+      "kunyomi": "waru(i)",
+      "meaning": "bad, mean",
+      "img": "one"
+    },
+    {
+      "kanji": "暗",
+      "onyomi": "an",
+      "kunyomi": "kura(i)",
+      "meaning": "dark",
+      "img": "one"
+    },
+    {
+      "kanji": "医",
+      "onyomi": "i",
+      "kunyomi": "-",
+      "meaning": "medicine",
+      "img": "one"
+    },
+    {
+      "kanji": "意",
+      "onyomi": "i",
+      "kunyomi": "-",
+      "meaning": "will, heart, meaning",
+      "img": "one"
+    },
+    {
+      "kanji": "以",
+      "onyomi": "i",
+      "kunyomi": "-",
+      "meaning": "prefix",
+      "img": "one"
+    }],
+    "N5": [
+
+    {
+      "kanji": "一",
+      "onyomi": "ichi, itsu",
+      "kunyomi": "hito(tsu), hito-",
+      "meaning": "one",
+      "img": "one"
+    },
+    {
+      "kanji": "ニ",
+      "onyomi": "ni",
+      "kunyomi": "futa(tsu), futa-",
+      "meaning": "two",
+      "img": "one"
+    },
+    {
+      "kanji": "三",
+      "onyomi": "san",
+      "kunyomi": "mit(tsu), mi-",
+      "meaning": "three",
+      "img": "one"
+    },
+    {
+      "kanji": "四",
+      "onyomi": "shi",
+      "kunyomi": "yo(ttsu), yu(tsu), yo-, yon-",
+      "meaning": "four",
+      "img": "one"
+    },
+    {
+      "kanji": "五",
+      "onyomi": "go",
+      "kunyomi": "itsu(tsu), itsu-",
+      "meaning": "five",
+      "img": "one"
+    }]
+  }
+}

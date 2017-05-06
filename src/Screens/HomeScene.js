@@ -7,10 +7,23 @@ import {
   Dimensions,
   Image
 } from 'react-native';
+import * as firebase from "firebase";
 
 import Images from '../Assets/images';
 import Colors from '../Style/Colors';
 const window = Dimensions.get('window');
+
+// Firebase
+var config = {
+    apiKey: "AIzaSyDxwaDxZctxtuX7Z3vvRizQDMytHHuWLFY",
+    authDomain: "aesthetic-kanji.firebaseapp.com",
+    databaseURL: "https://aesthetic-kanji.firebaseio.com/",
+    projectId: "aesthetic-kanji",
+    storageBucket: "aesthetic-kanji.appspot.com",
+    messagingSenderId: "695611125777"
+};
+
+const firebaseApp = firebase.initializeApp(config);
 
 export default class HomeScene extends Component {
   static navigationOptions = {
@@ -20,8 +33,37 @@ export default class HomeScene extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      level: 0
+      level: null,
     };
+
+    this.itemsRef = this.getRef().child('Kanji');
+  }
+
+   getRef() {
+    return firebaseApp.database().ref();
+  }
+
+  listenForItems(itemsRef) {
+    itemsRef.on('value', (snap) => {
+
+      // get children as an array
+      var items = [];
+      snap.forEach((child) => {
+        items.push({
+          data: child.val(),
+          _key: child.key
+        });
+      });
+      
+      this.setState({
+        db: items
+      });
+      
+    });
+  }
+
+  componentDidMount() {
+    this.listenForItems(this.itemsRef);
   }
 
   render() {
@@ -38,7 +80,10 @@ export default class HomeScene extends Component {
         color={Colors.one}
         onPress={() => {
           this.state.level=5;
-          navigate('Cards', { level: this.state.level });
+          navigate('Cards', { 
+            level: this.state.level,
+            list: this.state.db
+         });
         }}
         />
 
@@ -48,7 +93,10 @@ export default class HomeScene extends Component {
         color={Colors.two}
         onPress={() => {
           this.state.level=4;
-          navigate('Cards', { level: this.state.level });
+          navigate('Cards', { 
+            level: this.state.level,
+            list: this.state.db
+         });
         }}
         />
 
@@ -58,7 +106,10 @@ export default class HomeScene extends Component {
         color={Colors.three}
         onPress={() => {
           this.state.level=3;
-          navigate('Cards', { level: this.state.level });
+          navigate('Cards', { 
+            level: this.state.level,
+            list: this.state.db
+         });
         }}
         />
 
@@ -68,7 +119,10 @@ export default class HomeScene extends Component {
         color={Colors.four}
         onPress={() => {
           this.state.level=2;
-          navigate('Cards', { level: this.state.level });
+          navigate('Cards', { 
+            level: this.state.level,
+            list: this.state.db
+         });
         }}
         />
 
@@ -78,7 +132,10 @@ export default class HomeScene extends Component {
         color={Colors.five}
         onPress={() => {
           this.state.level=1;
-          navigate('Cards', { level: this.state.level });
+          navigate('Cards', { 
+            level: this.state.level,
+            list: this.state.db
+         });
         }}
         />
 

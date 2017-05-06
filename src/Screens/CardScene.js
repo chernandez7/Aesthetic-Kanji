@@ -12,13 +12,6 @@ import {
 
 import Images from '../Assets/images';
 import Colors from '../Style/Colors';
-import {
-  N5,
-  N4,
-  N3,
-  N2,
-  N1
-} from '../Kanji';
 
 const window = Dimensions.get('window');
 
@@ -32,50 +25,64 @@ export default class CardScene extends Component {
 
     this.state = {
       cardIndex: 0,
-      list: null,
       isLeftDisabled: false,
       isRightDisabled: false,
-      isAnswerHidden: true
+      isAnswerHidden: true,
     };
 
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
     this.handleCardPress = this.handleCardPress.bind(this);
-
   }
 
   componentWillMount() {
-    console.log(this.props.navigation.state.params.level);
-    switch (this.props.navigation.state.params.level){
+    const params = this.props.navigation.state.params;
+    switch (params.level) {
       case 5:
         this.setState({
-          list: N5
+          list: params.list[4].data,
+          max: params.list[4].data.length,
+          key: params.list[4]._key
         });
         break;
       case 4:
         this.setState({
-          list: N4
+          list: params.list[3].data,
+          max: params.list[3].data.length,
+          key: params.list[3]._key
         });
         break;
       case 3:
         this.setState({
-          list: N3
+          list: params.list[2].data,
+          max: params.list[2].data.length,
+          key: params.list[2]._key
         });
         break;
       case 2:
         this.setState({
-          list: N2
+          list: params.list[1].data,
+          max: params.list[1].data.length,
+          key: params.list[1]._key
         });
         break;
       case 1:
         this.setState({
-          list: N1
+          list: params.list[0].data,
+          max: params.list[0].data.length,
+          key: params.list[0]._key
         });
         break;
       default:
         console.log('how did you get here?');
         break;
     }
+  }
+
+  componentDidMount() {
+    console.log(this.state.list);
+    console.log(this.state.key);
+    console.log(this.state.max);
   }
 
   handleIncrement() {
@@ -157,21 +164,21 @@ export default class CardScene extends Component {
         return (
         <View style={styles.container}>
           
-          {/* Need to make it go through whole list*/}
           <Card 
             source={this.state.list} 
             index={this.state.cardIndex} 
             isAnswerHidden={this.state.isAnswerHidden}
           />
 
-          <Controls left={'Back'} right={'Forward'} index={this.state.cardIndex} max={this.state.list.length}
+          <Controls 
+            index={this.state.cardIndex}
             handleIncrement={this.handleIncrement} 
             handleDecrement={this.handleDecrement}
             isLeftDisabled={this.state.isLeftDisabled}
             isRightDisabled={this.state.isRightDisabled}
             handleCardPress={this.handleCardPress}
           />
-          
+
         </View>
     );
   }
@@ -217,7 +224,7 @@ class Controls extends Component {
           <Button 
             disabled={this.props.isLeftDisabled}
             onPress={this.props.handleDecrement}
-            title={this.props.left}
+            title={'Back'}
             color={Colors.one}
             />
           </View>
@@ -234,7 +241,7 @@ class Controls extends Component {
             <Button
             disabled={this.props.isRightDisabled}
             onPress={this.props.handleIncrement}
-            title={this.props.right}
+            title={'Forward'}
             color={Colors.one}
             />
           </View>
