@@ -52470,6 +52470,10 @@ var CardScene = _wrapComponent('CardScene')((_temp = _class = function (_Compone
       var newIndex = this.state.cardIndex + 1;
       console.log('index: ' + this.state.cardIndex);
 
+      this.setState({
+        isAnswerHidden: true
+      });
+
       if (!(this.state.cardIndex + 1 > MAX)) {
         this.setState({
           cardIndex: newIndex
@@ -52493,6 +52497,10 @@ var CardScene = _wrapComponent('CardScene')((_temp = _class = function (_Compone
     value: function handleDecrement() {
       var MAX = this.state.list.length;
       var newIndex = this.state.cardIndex - 1;
+
+      this.setState({
+        isAnswerHidden: true
+      });
 
       if (!(this.state.cardIndex - 1 < 0)) {
         this.setState({
@@ -52536,14 +52544,17 @@ var CardScene = _wrapComponent('CardScene')((_temp = _class = function (_Compone
       return _react3.default.createElement(
         _reactNative.View,
         { style: styles.container },
-        _react3.default.createElement(Card, { source: this.state.list, index: this.state.cardIndex }),
+        _react3.default.createElement(Card, {
+          source: this.state.list,
+          index: this.state.cardIndex,
+          isAnswerHidden: this.state.isAnswerHidden
+        }),
         _react3.default.createElement(Controls, { left: 'Back', right: 'Forward', index: this.state.cardIndex, max: this.state.list.length,
           handleIncrement: this.handleIncrement,
           handleDecrement: this.handleDecrement,
           isLeftDisabled: this.state.isLeftDisabled,
           isRightDisabled: this.state.isRightDisabled,
-          handleCardPress: this.handleCardPress,
-          isAnswerHidden: this.state.isAnswerHidden
+          handleCardPress: this.handleCardPress
         })
       );
     }
@@ -52576,7 +52587,8 @@ var Card = _wrapComponent('Card')(function (_Component2) {
           { style: styles.cardText },
           this.props.source[this.props.index].kanji
         ),
-        this.props.isAnswerHidden && _react3.default.createElement(Answers, { source: this.props.source, index: this.props.index })
+        !this.props.isAnswerHidden && _react3.default.createElement(Answers, { source: this.props.source, index: this.props.index }),
+        _react3.default.createElement(_reactNative.Image, { style: styles.cardImage, source: _images2.default.one })
       );
     }
   }]);
@@ -52598,20 +52610,20 @@ var Answers = _wrapComponent('Answers')(function (_Component3) {
     value: function render() {
       return _react3.default.createElement(
         _reactNative.View,
-        null,
+        { style: styles.answerContainer },
         _react3.default.createElement(
           _reactNative.Text,
-          { style: styles.cardText },
+          { style: styles.answerText },
           this.props.source[this.props.index].onyomi
         ),
         _react3.default.createElement(
           _reactNative.Text,
-          { style: styles.cardText },
+          { style: styles.answerText },
           this.props.source[this.props.index].kunyomi
         ),
         _react3.default.createElement(
           _reactNative.Text,
-          { style: styles.cardText },
+          { style: styles.answerText },
           this.props.source[this.props.index].meaning
         )
       );
@@ -52682,14 +52694,21 @@ var styles = _reactNative.StyleSheet.create({
   },
   cardContainer: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: _Colors2.default.Background,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: window.width
+  },
+  answerContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   controlsContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-
     margin: 20
   },
   controlsLeftContainer: {
@@ -52707,14 +52726,17 @@ var styles = _reactNative.StyleSheet.create({
     width: window.width * 0.25
   },
   cardText: {
-    fontSize: 30,
+    fontSize: 40,
     color: _Colors2.default.Text
   },
+  answerText: {
+    fontSize: 30,
+    color: _Colors2.default.one
+  },
   cardImage: {
-    flex: 1,
-
-    width: 100,
-    height: 100
+    flex: 0.5,
+    width: 200,
+    height: 200
   }
 });
 }, 422, null, "AestheticKanji/src/Screens/CardScene.js");

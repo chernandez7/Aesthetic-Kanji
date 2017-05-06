@@ -84,10 +84,14 @@ export default class CardScene extends Component {
     var newIndex = this.state.cardIndex + 1;
     console.log('index: ' + this.state.cardIndex);
 
+    this.setState({
+          isAnswerHidden: true
+        });
+
     // Increment index
     if (!(this.state.cardIndex + 1 > MAX)) { // not greater than max
       this.setState({
-          cardIndex: newIndex
+          cardIndex: newIndex,
         });
 
       console.log('index: ' + this.state.cardIndex);
@@ -109,10 +113,14 @@ export default class CardScene extends Component {
     var MAX = this.state.list.length;
     var newIndex = this.state.cardIndex - 1;
 
+    this.setState({
+          isAnswerHidden: true
+        });
+
     // decrement index
     if (!(this.state.cardIndex - 1 < 0)) { // not less than 0
       this.setState({
-          cardIndex: newIndex
+          cardIndex: newIndex,
         });
     }
 
@@ -178,8 +186,10 @@ class Card extends Component {
             {this.props.source[this.props.index].kanji}
           </Text>
           
-          {this.props.isAnswerHidden &&  
+          {!this.props.isAnswerHidden &&  
             <Answers source={this.props.source} index={this.props.index}/>}
+
+            <Image style={styles.cardImage} source={Images.one}/>
           
       </View>
     );
@@ -189,10 +199,10 @@ class Card extends Component {
 class Answers extends Component {
   render() {
     return(
-      <View>
-        <Text style={styles.cardText}>{this.props.source[this.props.index].onyomi}</Text>
-        <Text style={styles.cardText}>{this.props.source[this.props.index].kunyomi}</Text>
-        <Text style={styles.cardText}>{this.props.source[this.props.index].meaning}</Text>
+      <View style={styles.answerContainer}>
+        <Text style={styles.answerText}>{this.props.source[this.props.index].onyomi}</Text>
+        <Text style={styles.answerText}>{this.props.source[this.props.index].kunyomi}</Text>
+        <Text style={styles.answerText}>{this.props.source[this.props.index].meaning}</Text>
       </View>
     );
   }
@@ -243,41 +253,48 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: Colors.Background,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: window.width
+  },
+  answerContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   controlsContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    //alignItems: 'center',
     margin: 20
   },
   controlsLeftContainer: {
-    //flex: 1,
     justifyContent: 'flex-end',
     marginRight: 10,
     width: window.width * 0.25
   },
   controlsMiddleContainer: {
-    //flex: 1,
     justifyContent: 'flex-end',
     width: window.width * 0.25
   },
   controlsRightContainer: {
-    //flex: 1,
     marginLeft: 10,
     justifyContent: 'flex-end',
     width: window.width * 0.25
   },
   cardText: {
-    fontSize: 30,
+    fontSize: 40,
     color: Colors.Text
   },
+  answerText: {
+    fontSize: 30,
+    color: Colors.one
+  },
   cardImage: {
-   flex: 1,
-   // remove width and height to override fixed static size
-   width: 100,
-   height: 100,
+    flex: 0.5,
+   width: 200,
+   height: 200,
   },
 });
