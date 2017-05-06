@@ -6,7 +6,8 @@ import {
   View,
   Button,
   Dimensions,
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
 
 import Images from '../Assets/images';
@@ -33,11 +34,13 @@ export default class CardScene extends Component {
       cardIndex: 0,
       list: null,
       isLeftDisabled: false,
-      isRightDisabled: false
+      isRightDisabled: false,
+      isAnswerHidden: true
     };
 
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
+    this.handleCardPress = this.handleCardPress.bind(this);
 
   }
 
@@ -126,6 +129,20 @@ export default class CardScene extends Component {
     }
   }
 
+  handleCardPress() {
+    if (this.state.isAnswerHidden) {
+    this.setState({
+      isAnswerHidden: false
+    });
+    console.log('showing answer');
+    } else {
+      this.setState({
+      isAnswerHidden: true
+    });
+    console.log('hiding answer');
+    }
+  }
+
   render() {
     const { params } = this.props.navigation.state;
 
@@ -133,13 +150,18 @@ export default class CardScene extends Component {
         <View style={styles.container}>
           
           {/* Need to make it go through whole list*/}
-          <Card source={this.state.list} index={this.state.cardIndex}/>
+          <Card 
+            source={this.state.list} 
+            index={this.state.cardIndex} 
+            isAnswerHidden={this.state.isAnswerHidden}
+          />
 
           <Controls left={'Back'} right={'Forward'} index={this.state.cardIndex} max={this.state.list.length}
-          handleIncrement={this.handleIncrement} 
-          handleDecrement={this.handleDecrement}
-          isLeftDisabled={this.state.isLeftDisabled}
-          isRightDisabled={this.state.isRightDisabled}
+            handleIncrement={this.handleIncrement} 
+            handleDecrement={this.handleDecrement}
+            isLeftDisabled={this.state.isLeftDisabled}
+            isRightDisabled={this.state.isRightDisabled}
+            handleCardPress={this.handleCardPress}
           />
           
         </View>
@@ -148,16 +170,29 @@ export default class CardScene extends Component {
 }
 
 class Card extends Component {
+
   render() {
     return(
       <View style={styles.cardContainer}>
-        <Text style={styles.cardText}>{this.props.source[this.props.index].kanji}</Text>
-        {/*
+          <Text style={styles.cardText}>
+            {this.props.source[this.props.index].kanji}
+          </Text>
+          
+          {this.props.isAnswerHidden &&  
+            <Answers source={this.props.source} index={this.props.index}/>}
+          
+      </View>
+    );
+  }
+}
+
+class Answers extends Component {
+  render() {
+    return(
+      <View>
         <Text style={styles.cardText}>{this.props.source[this.props.index].onyomi}</Text>
         <Text style={styles.cardText}>{this.props.source[this.props.index].kunyomi}</Text>
         <Text style={styles.cardText}>{this.props.source[this.props.index].meaning}</Text>
-        <Image style={styles.cardImage} source={Images[this.props.source[this.props.index].img]}/>
-      */}
       </View>
     );
   }
@@ -176,6 +211,14 @@ class Controls extends Component {
             color={Colors.one}
             />
           </View>
+
+          <View style={styles.controlsMiddleContainer}>
+            <Button
+              onPress={this.props.handleCardPress}
+              title={'Flip'}
+              color={Colors.two}
+              />
+            </View>
 
           <View style={styles.controlsRightContainer}>
             <Button
@@ -200,7 +243,8 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     flex: 1,
-    backgroundColor: Colors.Background
+    backgroundColor: Colors.Background,
+    width: window.width
   },
   controlsContainer: {
     flex: 1,
@@ -213,13 +257,18 @@ const styles = StyleSheet.create({
     //flex: 1,
     justifyContent: 'flex-end',
     marginRight: 10,
-    width: window.width * 0.4
+    width: window.width * 0.25
+  },
+  controlsMiddleContainer: {
+    //flex: 1,
+    justifyContent: 'flex-end',
+    width: window.width * 0.25
   },
   controlsRightContainer: {
     //flex: 1,
     marginLeft: 10,
     justifyContent: 'flex-end',
-    width: window.width * 0.4
+    width: window.width * 0.25
   },
   cardText: {
     fontSize: 30,
@@ -228,8 +277,7 @@ const styles = StyleSheet.create({
   cardImage: {
    flex: 1,
    // remove width and height to override fixed static size
-   width: null,
-   height: null,
-   resizeMode: 'cover',
+   width: 100,
+   height: 100,
   },
 });
