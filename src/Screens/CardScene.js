@@ -30,39 +30,64 @@ export default class CardScene extends Component {
     super(props);
     this.state = {
       cardIndex: 0,
-      list: N5
+      list: N5,
+      isLeftDisabled: false,
+      isRightDisabled: false
     };
 
     this.handleIncrement = this.handleIncrement.bind(this);
     this.handleDecrement = this.handleDecrement.bind(this);
+
   }
 
   handleIncrement() {
-    // Need to add upper bound once list is in DB
-    var MAX = this.state.list.length;
 
+    var MAX = this.state.list.length;
     var newIndex = this.state.cardIndex + 1;
-    if (newIndex < MAX) {
-    
-    this.setState({
-      cardIndex: newIndex
-    });
-    console.log("Incremented, index is: " + newIndex);
-    } else {
-      console.log("Can't Increment above max");
+    console.log('index: ' + this.state.cardIndex);
+
+    // Increment index
+    if (!(this.state.cardIndex + 1 > MAX)) { // not greater than max
+      this.setState({
+          cardIndex: newIndex
+        });
+
+      console.log('index: ' + this.state.cardIndex);
+
+      if (this.state.cardIndex >= MAX) {
+        this.setState({
+          isRightDisabled: true
+        });
+      } else if (this.state.cardIndex < MAX) {
+        this.setState({
+          isRightDisabled: false,
+        });
+      }
     }
+    
   }
 
   handleDecrement() {
+    var MAX = this.state.list.length;
     var newIndex = this.state.cardIndex - 1;
-    if (newIndex >= 0) {
-      
+
+    // decrement index
+    if (!(this.state.cardIndex - 1 < 0)) { // not less than 0
       this.setState({
-        cardIndex: newIndex
+          cardIndex: newIndex
+        });
+    }
+
+    console.log('index: ' + this.state.cardIndex);
+
+    if (this.state.cardIndex <= 0) { // should be disabled
+      this.setState({
+        isLeftDisabled: true
       });
-      console.log("Decremented, index is: " + newIndex);
-    } else {
-      console.log("Can't Decrement out of range");
+    } else if (this.state.cardIndex > 0) { // shouldn't be disabled
+      this.setState({
+        isLeftDisabled: false,
+      });
     }
   }
 
@@ -75,7 +100,12 @@ export default class CardScene extends Component {
           {/* Need to make it go through whole list*/}
           <Card source={this.state.list} index={this.state.cardIndex}/>
 
-          <Controls left={'Back'} right={'Forward'} handleIncrement={this.handleIncrement} handleDecrement={this.handleDecrement}/>
+          <Controls left={'Back'} right={'Forward'} index={this.state.cardIndex} max={this.state.list.length}
+          handleIncrement={this.handleIncrement} 
+          handleDecrement={this.handleDecrement}
+          isLeftDisabled={this.state.isLeftDisabled}
+          isRightDisabled={this.state.isRightDisabled}
+          />
           
         </View>
     );
@@ -97,22 +127,13 @@ class Card extends Component {
 }
 
 class Controls extends Component {
-  /*
-  constructor(props) {
-      super(props);
-      if (this.props.index == 0) {
-        this.state = {
-          disabledLeftButton: true
-        };
-      }
-  }
-  */
-  render() {
 
+  render() {
     return(
       <View style={styles.controlsContainer}>
         <View style={styles.controlsLeftContainer}>
           <Button 
+            disabled={this.props.isLeftDisabled}
             onPress={this.props.handleDecrement}
             title={this.props.left}
             color={Colors.one}
@@ -121,6 +142,7 @@ class Controls extends Component {
 
           <View style={styles.controlsRightContainer}>
             <Button
+            disabled={this.props.isRightDisabled}
             onPress={this.props.handleIncrement}
             title={this.props.right}
             color={Colors.one}

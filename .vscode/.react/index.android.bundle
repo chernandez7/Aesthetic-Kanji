@@ -46828,42 +46828,65 @@ var CardScene = function (_Component) {
 
     _this.state = {
       cardIndex: 0,
-      list: _Kanji.N5
+      list: _Kanji.N5,
+      isLeftDisabled: false,
+      isRightDisabled: false
     };
 
     _this.handleIncrement = _this.handleIncrement.bind(_this);
     _this.handleDecrement = _this.handleDecrement.bind(_this);
+
     return _this;
   }
 
   babelHelpers.createClass(CardScene, [{
     key: 'handleIncrement',
     value: function handleIncrement() {
+
       var MAX = this.state.list.length;
-
       var newIndex = this.state.cardIndex + 1;
-      if (newIndex < MAX) {
+      console.log('index: ' + this.state.cardIndex);
 
+      if (!(this.state.cardIndex + 1 > MAX)) {
         this.setState({
           cardIndex: newIndex
         });
-        console.log("Incremented, index is: " + newIndex);
-      } else {
-        console.log("Can't Increment above max");
+
+        console.log('index: ' + this.state.cardIndex);
+
+        if (this.state.cardIndex >= MAX) {
+          this.setState({
+            isRightDisabled: true
+          });
+        } else if (this.state.cardIndex < MAX) {
+          this.setState({
+            isRightDisabled: false
+          });
+        }
       }
     }
   }, {
     key: 'handleDecrement',
     value: function handleDecrement() {
+      var MAX = this.state.list.length;
       var newIndex = this.state.cardIndex - 1;
-      if (newIndex >= 0) {
 
+      if (!(this.state.cardIndex - 1 < 0)) {
         this.setState({
           cardIndex: newIndex
         });
-        console.log("Decremented, index is: " + newIndex);
-      } else {
-        console.log("Can't Decrement out of range");
+      }
+
+      console.log('index: ' + this.state.cardIndex);
+
+      if (this.state.cardIndex <= 0) {
+        this.setState({
+          isLeftDisabled: true
+        });
+      } else if (this.state.cardIndex > 0) {
+        this.setState({
+          isLeftDisabled: false
+        });
       }
     }
   }, {
@@ -46876,7 +46899,12 @@ var CardScene = function (_Component) {
         _reactNative.View,
         { style: styles.container },
         _react2.default.createElement(Card, { source: this.state.list, index: this.state.cardIndex }),
-        _react2.default.createElement(Controls, { left: 'Back', right: 'Forward', handleIncrement: this.handleIncrement, handleDecrement: this.handleDecrement })
+        _react2.default.createElement(Controls, { left: 'Back', right: 'Forward', index: this.state.cardIndex, max: this.state.list.length,
+          handleIncrement: this.handleIncrement,
+          handleDecrement: this.handleDecrement,
+          isLeftDisabled: this.state.isLeftDisabled,
+          isRightDisabled: this.state.isRightDisabled
+        })
       );
     }
   }]);
@@ -46940,7 +46968,6 @@ var Controls = function (_Component3) {
   babelHelpers.createClass(Controls, [{
     key: 'render',
     value: function render() {
-
       return _react2.default.createElement(
         _reactNative.View,
         { style: styles.controlsContainer },
@@ -46948,6 +46975,7 @@ var Controls = function (_Component3) {
           _reactNative.View,
           { style: styles.controlsLeftContainer },
           _react2.default.createElement(_reactNative.Button, {
+            disabled: this.props.isLeftDisabled,
             onPress: this.props.handleDecrement,
             title: this.props.left,
             color: _Colors2.default.one
@@ -46957,6 +46985,7 @@ var Controls = function (_Component3) {
           _reactNative.View,
           { style: styles.controlsRightContainer },
           _react2.default.createElement(_reactNative.Button, {
+            disabled: this.props.isRightDisabled,
             onPress: this.props.handleIncrement,
             title: this.props.right,
             color: _Colors2.default.one
