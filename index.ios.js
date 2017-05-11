@@ -1,4 +1,4 @@
 import {AppRegistry} from 'react-native';
 import Root from './src/Root';
 
-AppRegistry.registerComponent('Aesthetic Kanji', () => Root);
+AppRegistry.registerComponent('AestheticKanji', () => Root);
