@@ -35,43 +35,64 @@ export default class CardScene extends Component {
     this.handleCardPress = this.handleCardPress.bind(this);
   }
 
+  randomNumber(max, min, used) {
+    var number = Math.floor(max - Math.random()*(max-min));
+    if (used.indexOf(number) === -1) {
+      return number;
+    } else {
+      return this.randomNumber(max, min, used);
+    }
+  }
+
+  generateRandomIndeces(data, max) {
+    var indeces = [];
+
+    for (var i = 0; i < 5; i++) {
+      var random = this.randomNumber(max, 0, indeces);
+      if (indeces.indexOf(random) === -1) {
+        indeces.push(random);
+        //console.log(random + " added");
+    } else {
+      console.log(random + " is in array, shouldn't get here");
+      }
+    }
+    return indeces;
+  }
+
+  setListToState(params, index) {
+    var indexList; 
+    var dataList = [];
+
+    indexList = this.generateRandomIndeces(params.list[index].data, params.list[index].data.length);
+    for (var i = 0; i < indexList.length; i++) {
+      dataList[i] = params.list[index].data[indexList[i]];
+    }
+
+    this.setState({
+      list: dataList,
+      max: params.list[index].data.length,
+      key: params.list[index]._key
+    });
+  }
+
   componentWillMount() {
     const params = this.props.navigation.state.params;
+    
     switch (params.level) {
       case 5:
-        this.setState({
-          list: params.list[4].data,
-          max: params.list[4].data.length,
-          key: params.list[4]._key
-        });
+        this.setListToState(params, 4);
         break;
       case 4:
-        this.setState({
-          list: params.list[3].data,
-          max: params.list[3].data.length,
-          key: params.list[3]._key
-        });
+        this.setListToState(params, 3);
         break;
       case 3:
-        this.setState({
-          list: params.list[2].data,
-          max: params.list[2].data.length,
-          key: params.list[2]._key
-        });
+        this.setListToState(params, 2);
         break;
       case 2:
-        this.setState({
-          list: params.list[1].data,
-          max: params.list[1].data.length,
-          key: params.list[1]._key
-        });
+        this.setListToState(params, 1);
         break;
       case 1:
-        this.setState({
-          list: params.list[0].data,
-          max: params.list[0].data.length,
-          key: params.list[0]._key
-        });
+        this.setListToState(params, 0);
         break;
       default:
         console.log('how did you get here?');
@@ -189,8 +210,9 @@ class Card extends Component {
           
           {!this.props.isAnswerHidden &&  
             <Answers source={this.props.source} index={this.props.index}/>}
-
+            {/*
             <Image style={styles.cardImage} source={Images.one}/>
+            */}
           
       </View>
     );
